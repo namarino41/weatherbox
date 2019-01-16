@@ -7,7 +7,7 @@ let darkSky = require('./darksky.js');
 // todo: figure out a better place to put this later.
 const darkSkyConfig = {
     endpoint: 'https://api.darksky.net/forecast/',
-    apiKey: '928831417a19ef3bfae5a3f103c9a8f4',
+    apiKey: // api key here
 }
 
 darkSky = new darkSky(darkSkyConfig);
