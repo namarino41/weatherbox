@@ -10,9 +10,12 @@ class DarkSky {
      * 
      * @return {Promise} promise containing the entire forecast.
      */
-    getForecast() {
+    getForecast(language, units, extend) {
         const request = new RequestBuilder(this.config)
             .location({latitude: 42.3601, longitude: -71.0589})
+            .language(language)
+            .units(units)
+            .extend(extend)
             .build();
         
         return this._makeRequest(request);
@@ -23,9 +26,12 @@ class DarkSky {
      * 
      * @return {Promise} promise containing the 'currently' forecast.
      */
-    getCurrentForecast() {
+    getCurrentForecast(language = false, units = false, extend = false) {
         const request = new RequestBuilder(this.config)
             .location({latitude: 42.3601, longitude: -71.0589})
+            .language(language)
+            .units(units)
+            .extend(extend)
             .exclude(['minutely', 'hourly', 'daily', 'alerts'])
             .build();
         
@@ -37,9 +43,12 @@ class DarkSky {
      * 
      * @return {Promise} promise containing the 'minutely' forecast.
      */
-    getMinutelyForecast() {
+    getMinutelyForecast(language = false, units = false, extend = false) {
         const request = new RequestBuilder(this.config)
             .location({latitude: 42.3601, longitude: -71.0589})
+            .language(language)
+            .units(units)
+            .extend(extend)
             .exclude(['currently', 'hourly', 'daily', 'alerts'])
             .build();
 
@@ -51,9 +60,12 @@ class DarkSky {
      * 
      * @return {Promise} promise containing the 'hourly' forecast.
      */
-    getHourlyForecast() {
+    getHourlyForecast(language = false, units = false, extend = false) {
         const request = new RequestBuilder(this.config)
             .location({latitude: 42.3601, longitude: -71.0589})
+            .language(language)
+            .units(units)
+            .extend(extend)
             .exclude(['currently', 'minutely', 'daily', 'alerts'])
             .build();
 
@@ -65,9 +77,12 @@ class DarkSky {
      * 
      * @return {Promise} promise containg the 'daily' forecast.
      */
-    getDailyForecast() {
+    getDailyForecast(language = false, units = false, extend = false) {
         const request = new RequestBuilder(this.config)
             .location({latitude: 42.3601, longitude: -71.0589})
+            .language(language)
+            .units(units)
+            .extend(extend)
             .exclude(['currently', 'minutely', 'hourly', 'alerts'])
             .build();
 
@@ -79,9 +94,12 @@ class DarkSky {
      * 
      * @return {Promise} promise containing the 'alerts'.
      */
-    getAlerts() {
+    getAlerts(language = false, units = false, extend = false) {
         const request = new RequestBuilder(this.config)
             .location({latitude: 42.3601, longitude: -71.0589})
+            .language(language)
+            .units(units)
+            .extend(extend)
             .exclude(['currently', 'minutely', 'hourly', 'daily'])
             .build();
         
@@ -89,8 +107,8 @@ class DarkSky {
     }
 
     /**
-     * Makes a request to DarkSky web service and returns a promise that
-     * contains the desired forecast.                                    
+     * Makes a request to DarkSky web service and returns a promise
+     * containing the desired forecast.                                    
      * @param {string} request the request URL.
      * 
      * @return {Promise} containing desired forecast.
@@ -121,27 +139,33 @@ class RequestBuilder {
     }
 
     exclude(exclusions) {
-        this.excl = `?exclude=${exclusions.join(',')}`;
+        if (exclusions)
+            this.excl = `?exclude=${exclusions.join(',')}`;
         return this;
     }
 
     extend(extend) {
-        this.ext = `?extend=${extend}`;
+        if (extend)
+            this.ext = `?extend=${extend}`;
         return this;
     }
 
     language(language) {
-        this.lang = `?language=${language}`;
+        if (language) 
+            this.lang = `?language=${language}`;
         return this;
     }
 
     units(units) {
-        this.uni = `?units=${units}`;
+        if (units)
+            this.uni = `?units=${units}`;
         return this;
     }
 
     time(time) {
-        this.tim = time;
+        if (time)
+            this.tim = time;
+        return this;
     }
 
     build() {
