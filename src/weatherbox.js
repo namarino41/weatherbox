@@ -12,45 +12,129 @@ geolocation = new geolocation(geoConfig);
 
 app.get('/web/forecast/getForecast', (req, res) => {
     let options = getQueries(req);
-    let forecast = darkSky.getForecast(options);
 
-    sendResponse(forecast, options, req, res);
+    if (!options.location) {
+        geolocation.geolocate(req.ip).then((geo) => {
+            options.location = {
+                latitude: geo.latitude,
+                longitude: geo.longitude
+            };
+
+            darkSky.getForecast(options).then((forecast) => {
+                res.send(forecast);
+            });
+        });
+    } else {
+        darkSky.getForecast(options).then((forecast) => {
+            res.send(forecast);
+        });
+    }
 });
 
 
 app.get('/web/forecast/getCurrently', (req, res) => {
     let options = getQueries(req);
-    let forecast = darkSky.getCurrentForecast(options);
 
-    sendResponse(forecast, options, req, res);
+    if (!options.location) {
+        geolocation.geolocate(req.ip).then((geo) => {
+            options.location = {
+                latitude: geo.latitude,
+                longitude: geo.longitude
+            };
+
+            darkSky.getCurrentForecast(options).then((forecast) => {
+                res.send(forecast);
+            });
+        });
+    } else {
+        darkSky.getCurrentForecast(options).then((forecast) => {
+            res.send(forecast);
+        });
+    }
 });
 
 app.get('/web/forecast/getMinutely', (req, res) => {
     let options = getQueries(req);
-    let forecast = darkSky.getMinutelyForecast(options);
 
-    sendResponse(forecast, options, req, res);
+    if (!options.location) {
+        geolocation.geolocate(req.ip).then((geo) => {
+            options.location = {
+                latitude: geo.latitude,
+                longitude: geo.longitude
+            };
+
+            darkSky.getMinutelyForecast(options).then((forecast) => {
+                res.send(forecast);
+            });
+        });
+    } else {
+        darkSky.getMinutelyForecast(options).then((forecast) => {
+            res.send(forecast);
+        });
+    }
 });
 
 app.get('/web/forecast/getHourly', (req, res) => {
     let options = getQueries(req);
-    let forecast = darkSky.getHourlyForecast(options);
 
-    sendResponse(forecast, options, req, res);
+    if (!options.location) {
+        geolocation.geolocate(req.ip).then((geo) => {
+            options.location = {
+                latitude: geo.latitude,
+                longitude: geo.longitude
+            };
+
+            darkSky.getHourlyForecast(options).then((forecast) => {
+                res.send(forecast);
+            });
+        });
+    } else {
+        darkSky.getHourlyForecast(options).then((forecast) => {
+            res.send(forecast);
+        });
+    }
 });
 
 app.get('/web/forecast/getDaily', (req, res) => {
     let options = getQueries(req);
-    let forecast = darkSky.getDailyForecast(options);
 
-    sendResponse(forecast, options, req, res);
+    if (!options.location) {
+        geolocation.geolocate(req.ip).then((geo) => {
+            options.location = {
+                latitude: geo.latitude,
+                longitude: geo.longitude
+            };
+
+            darkSky.getDailyForecast(options).then((forecast) => {
+                res.send(forecast);
+            });
+        });
+    } else {
+        darkSky.getDailyForecast(options).then((forecast) => {
+            res.send(forecast);
+        });
+    }
 });
 
 app.get('/web/forecast/getAlerts', (req, res) => {
     let options = getQueries(req);
-    let forecast = darkSky.getAlerts(options);
 
-    sendResponse(forecast, options, req, res);
+    if (!options.location) {
+        geolocation.geolocate(req.ip).then((geo) => {
+            options.location = {
+                latitude: geo.latitude,
+                longitude: geo.longitude
+            };
+
+            darkSky.getAlerts(options).then((forecast) => {
+                res.send(forecast);
+            });
+        });
+    } else {
+        darkSky.getAlerts(options).then((forecast) => {
+            res.send(forecast);
+        });
+    }
 });
 
 function getQueries(req) {
@@ -62,33 +146,33 @@ function getQueries(req) {
     };
 }
 
-/**
- * TODO
- * 
- * @param {Promise} forecast resolves to requested forecast
- * @param {*} options request query fragments
- * @param {*} req http response
- * @param {*} res http request
- */
-function sendResponse(forecast, options, req, res) {
-    if (!options.location) {
-        geolocation.geolocate(req.ip).then((geo) => {
-            options.location = {
-                latitude: geo.latitude,
-                longitude: geo.longitude
-            };
+// /**
+//  * TODO
+//  * 
+//  * @param {Promise} forecast resolves to requested forecast
+//  * @param {Object} options request query fragments
+//  * @param {Object} req http response
+//  * @param {Object} res http request
+//  */
+// function sendResponse(forecast, options, req, res) {
+//     if (!options.location) {
+//         geolocation.geolocate(req.ip).then((geo) => {
+//             options.location = {
+//                 latitude: geo.latitude,
+//                 longitude: geo.longitude
+//             };
 
-            forecast.then((forecast) => {
-                res.send(forecast);
-            });
-        }).catch((er) => {
-            console.log(er);
-        });
-    } else {
-        forecast(options).then((forecast) => {
-            res.send(forecast);
-        });
-    }
-}
+//             forecast.then((forecast) => {
+//                 res.send(forecast);
+//             });
+//         }).catch((er) => {
+//             console.log(er);
+//         });
+//     } else {
+//         forecast(options).then((forecast) => {
+//             res.send(forecast);
+//         });
+//     }
+// }
 
 app.listen(port, '0.0.0.0', () => console.log(`WeatherBox listening on port ${port}`));

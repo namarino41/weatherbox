@@ -12,7 +12,7 @@ class DarkSky {
      */
     getForecast(options) {
         const request = new RequestBuilder(this.config)
-            .location({latitude: 42.3601, longitude: -71.0589})
+            .location(options.location)
             .language(options.language)
             .units(options.units)
             .extend(options.extend)
@@ -26,12 +26,12 @@ class DarkSky {
      * 
      * @return {Promise} promise containing the 'currently' forecast.
      */
-    getCurrentForecast(language = false, units = false, extend = false) {
+    getCurrentForecast(options) {
         const request = new RequestBuilder(this.config)
-            .location({latitude: 42.3601, longitude: -71.0589})
-            .language(language)
-            .units(units)
-            .extend(extend)
+            .location(options.location)
+            .language(options.language)
+            .units(options.units)
+            .extend(options.extend)
             .exclude(['minutely', 'hourly', 'daily', 'alerts'])
             .build();
         
@@ -43,12 +43,12 @@ class DarkSky {
      * 
      * @return {Promise} promise containing the 'minutely' forecast.
      */
-    getMinutelyForecast(language = false, units = false, extend = false) {
+    getMinutelyForecast(options) {
         const request = new RequestBuilder(this.config)
-            .location({latitude: 42.3601, longitude: -71.0589})
-            .language(language)
-            .units(units)
-            .extend(extend)
+            .location(options.location)    
+            .language(options.language)
+            .units(options.units)
+            .extend(options.extend)
             .exclude(['currently', 'hourly', 'daily', 'alerts'])
             .build();
 
@@ -60,12 +60,12 @@ class DarkSky {
      * 
      * @return {Promise} promise containing the 'hourly' forecast.
      */
-    getHourlyForecast(language = false, units = false, extend = false) {
+    getHourlyForecast(options) {
         const request = new RequestBuilder(this.config)
-            .location({latitude: 42.3601, longitude: -71.0589})
-            .language(language)
-            .units(units)
-            .extend(extend)
+            .location(options.location)
+            .language(options.language)
+            .units(options.units)
+            .extend(options.extend)
             .exclude(['currently', 'minutely', 'daily', 'alerts'])
             .build();
 
@@ -77,12 +77,12 @@ class DarkSky {
      * 
      * @return {Promise} promise containg the 'daily' forecast.
      */
-    getDailyForecast(language = false, units = false, extend = false) {
+    getDailyForecast(options) {
         const request = new RequestBuilder(this.config)
-            .location({latitude: 42.3601, longitude: -71.0589})
-            .language(language)
-            .units(units)
-            .extend(extend)
+            .location(options.location)
+            .language(options.language)
+            .units(options.units)
+            .extend(options.extend)
             .exclude(['currently', 'minutely', 'hourly', 'alerts'])
             .build();
 
@@ -94,12 +94,12 @@ class DarkSky {
      * 
      * @return {Promise} promise containing the 'alerts'.
      */
-    getAlerts(language = false, units = false, extend = false) {
+    getAlerts(options) {
         const request = new RequestBuilder(this.config)
-            .location({latitude: 42.3601, longitude: -71.0589})
-            .language(language)
-            .units(units)
-            .extend(extend)
+            .location(options.location)
+            .language(options.language)
+            .units(options.units)
+            .extend(options.extend)
             .exclude(['currently', 'minutely', 'hourly', 'daily'])
             .build();
         
@@ -131,8 +131,8 @@ class RequestBuilder {
         this.baseEndpoint = `${config.endpoint}${config.apiKey}`;
     }
 
-    location(coordinates) {
-        this.loc = `${coordinates.latitude},${coordinates.longitude}`;
+    location(location) {
+        this.loc = `${location.latitude},${location.longitude}`;
         return this;
     }
 
