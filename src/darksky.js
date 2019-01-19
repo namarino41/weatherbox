@@ -10,12 +10,12 @@ class DarkSky {
      * 
      * @return {Promise} promise containing the entire forecast.
      */
-    getForecast(language, units, extend) {
+    getForecast(options) {
         const request = new RequestBuilder(this.config)
             .location({latitude: 42.3601, longitude: -71.0589})
-            .language(language)
-            .units(units)
-            .extend(extend)
+            .language(options.language)
+            .units(options.units)
+            .extend(options.extend)
             .build();
         
         return this._makeRequest(request);
@@ -118,9 +118,7 @@ class DarkSky {
             uri: request,
             json: true
         }
-
-        console.log(request);
-
+        
         return rp(options);
     }
 }

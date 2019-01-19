@@ -1,101 +1,94 @@
 const express = require('express');
 let darkSky = require('./darksky.js');
+let geolocation = require('./geolocation.js');
 let darkSkyConfig = require('../config/darksky-config');
-const app = express();
+let geoConfig = require('../config/ipstack-config.json');
 
+const app = express();
 const port = 3000;
 
 darkSky = new darkSky(darkSkyConfig);
+geolocation = new geolocation(geoConfig);
 
-app.get('/web/forecast', (req, res) => {
-    const location = req.query.location;
-    const language = req.query.language;
-    const units = req.query.units;
-    const extend = req.query.extend;
+app.get('/web/forecast/getForecast', (req, res) => {
+    let options = getQueries(req);
+    let forecast = darkSky.getForecast(options);
 
-    if (!location) {
-        res.sendStatus(400);
-        return;
-    }
-
-    darkSky.getForecast(location, language, units, extend).then((forecast) => {
-        res.send(forecast);
-    });
+    sendResponse(forecast, options, req, res);
 });
 
-app.get('/web/currently', (req, res) => {
-    const language = req.query.language;
-    const units = req.query.units;
-    const extend = req.query.extend; 
 
-    if (!location) {
-        res.sendStatus(400);
-        return;
-    }
+app.get('/web/forecast/getCurrently', (req, res) => {
+    let options = getQueries(req);
+    let forecast = darkSky.getCurrentForecast(options);
 
-    darkSky.getCurrentForecast(lagnuage, units, extend).then((forecast) => {
-        res.send(forecast);
-    });
+    sendResponse(forecast, options, req, res);
 });
 
-app.get('/web/minutely', (req, res) => {
-    const language = req.query.language;
-    const units = req.query.units;
-    const extend = req.query.extend;
+app.get('/web/forecast/getMinutely', (req, res) => {
+    let options = getQueries(req);
+    let forecast = darkSky.getMinutelyForecast(options);
 
-    if (!location) {
-        res.sendStatus(400);
-        return;
-    }
-    
-    darkSky.getMinutelyForecast(lagnuage, units, extend).then((forecast) => {
-        res.send(forecast);
-    });
+    sendResponse(forecast, options, req, res);
 });
 
-app.get('/web/hourly', (req, res) => {
-    const language = req.query.language;
-    const units = req.query.units;
-    const extend = req.query.extend;
+app.get('/web/forecast/getHourly', (req, res) => {
+    let options = getQueries(req);
+    let forecast = darkSky.getHourlyForecast(options);
 
-    if (!location) {
-        res.sendStatus(400);
-        return;
-    }
-
-    darkSky.getHourlyForecast(language, units, extend).then((forecast) => {
-        res.send(forecast);
-    });
+    sendResponse(forecast, options, req, res);
 });
 
-app.get('/web/daily', (req, res) => {
-    const language = req.query.language;
-    const units = req.query.units;
-    const extend = req.query.extend;
+app.get('/web/forecast/getDaily', (req, res) => {
+    let options = getQueries(req);
+    let forecast = darkSky.getDailyForecast(options);
 
-    if (!location) {
-        res.sendStatus(400);
-        return;
-    }
-
-    darkSky.getDailyForecast(language, units, extend).then((forecast) => {
-        res.send(forecast);
-    });
+    sendResponse(forecast, options, req, res);
 });
 
-app.get('/web/alerts', (req, res) => {
-    const language = req.query.language;
-    const units = req.query.units;
-    const extend = req.query.extend;
+app.get('/web/forecast/getAlerts', (req, res) => {
+    let options = getQueries(req);
+    let forecast = darkSky.getAlerts(options);
 
-    if (!location) {
-        res.sendStatus(400);
-        return;
-    }
-
-    darkSky.getAlerts(language, units, extend).then((forecast) => {
-        res.send(forecast);
-    });
+    sendResponse(forecast, options, req, res);
 });
 
-app.listen(port, () => console.log(`WeatherBox listening on port ${port}!`));
+function getQueries(req) {
+    return {
+        location: req.query.location,
+        langauge: req.query.language,
+        units: req.query.units,
+        extend: req.query.extend
+    };
+}
+
+/**
+ * TODO
+ * 
+ * @param {Promise} forecast resolves to requested forecast
+ * @param {*} options request query fragments
+ * @param {*} req http response
+ * @param {*} res http request
+ */
+function sendResponse(forecast, options, req, res) {
+    if (!options.location) {
+        geolocation.geolocate(req.ip).then((geo) => {
+            options.location = {
+                latitude: geo.latitude,
+                longitude: geo.longitude
+            };
+
+            forecast.then((forecast) => {
+                res.send(forecast);
+            });
+        }).catch((er) => {
+            console.log(er);
+        });
+    } else {
+        forecast(options).then((forecast) => {
+            res.send(forecast);
+        });
+    }
+}
+
+app.listen(port, '0.0.0.0', () => console.log(`WeatherBox listening on port ${port}`));

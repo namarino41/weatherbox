@@ -1,0 +1,4 @@
+{
+    "endpoint": "http://api.ipstack.com/",
+    "apiKey": <IPStack api key>
+}
