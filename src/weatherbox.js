@@ -139,8 +139,11 @@ app.get('/web/forecast/getAlerts', (req, res) => {
 
 function getQueries(req) {
     return {
-        location: req.query.location,
-        langauge: req.query.language,
+        location: {
+            latitude: req.query.latitude,
+            longitude: req.query.longitude
+        },
+        language: req.query.language,
         units: req.query.units,
         extend: req.query.extend
     };

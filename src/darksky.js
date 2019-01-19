@@ -17,7 +17,7 @@ class DarkSky {
             .units(options.units)
             .extend(options.extend)
             .build();
-        
+
         return this._makeRequest(request);
     }
 
