@@ -2,16 +2,33 @@ const rp = require('request-promise');
 const publicIp = require('public-ip');
 var ip = require('ip');
 
+/**
+ * Client for making geolocation requests to ipstack.com.
+ */
 class Geolocation {
     constructor(config) {
         this.config = config;
     }
 
-    geolocate(requestIp) {
+    /**
+     * Makes a geolocation request to ipstack.com and returns the approximate
+     * geolocation of the client.
+     * 
+     * @param {string} requestIp client's ip address.
+     * 
+     * @return {Promise} resolves to geolocation object.
+     */
+    async geolocate(requestIp) {
+        // If the requestIp is private (on the same network), 
+        // find the public IP of this machine make a geolocation request.
+        // If the requestIp is not private, it's public, so request a 
+        // geolocation for that IP.
         if (this._isPrivateIP(requestIp)) {
-            return publicIp.v4().then((publicIp) => {
-                return this._geolocate(publicIp);
-            });
+            return this._geolocate(await publicIp.v4());
+     
+            // return publicIp.v4().then((publicIp) => {
+            //     return this._geolocate(publicIp);
+            // });
         } else {
             return this._geolocate(requestIp);
         }
@@ -20,7 +37,8 @@ class Geolocation {
     _isPrivateIP(ip) {
         var parts = ip.split('.');
 
-        return ip == 'localhost' || ip == '127.0.0.1' ||
+        return ip == 'localhost' ||
+            ip == '127.0.0.1' ||
             parts[0] === '10' || 
            (parts[0] === '172' && (parseInt(parts[1], 10) >= 16 && parseInt(parts[1], 10) <= 31)) || 
            (parts[0] === '192' && parts[1] === '168');
@@ -37,12 +55,3 @@ class Geolocation {
 }
 
 module.exports = Geolocation;
-
-// //192.168.1.146
-
-// new Geolocation({
-//     "endpoint": "http://api.ipstack.com/",
-//     "apiKey": "9c8144a3dc134abc91b021d086ba3656"
-// }).geolocate("192.168.1.146").then((res) => {
-//     console.log(res)
-// });

@@ -1,3 +1,31 @@
+/*
+ * RPC API that handles client forecast requests.
+ *
+ * Base URL:
+ *      http://[ip-address]:3000/
+ * 
+ * Web forecast requests:
+ *      - Full forecast:
+ *          
+ *      - Current forecast:
+ * 
+ *      - Minutely forecast:
+ * 
+ *      - Hourly forecast:
+ * 
+ *      - Daily forecast:
+ * 
+ * Parameters: 
+ *      - location (optional): location weather request
+ *          e.g. ?latitude=<latitude>&latitude=<latitude>
+ *      - language (optional): language of response; english by default
+ *          e.g. ?language=<language code>
+ *      - units (optional): units of response; imperial by default
+ *          e.g. ?units=<units code>
+ *      - extend (optional): extend hourly forecast
+ *          e.g. ?extend=<true/false>
+ */
+
 const express = require('express');
 let darkSky = require('./darksky.js');
 let geolocation = require('./geolocation.js');
@@ -10,172 +38,153 @@ const port = 3000;
 darkSky = new darkSky(darkSkyConfig);
 geolocation = new geolocation(geoConfig);
 
-app.get('/web/forecast/getForecast', (req, res) => {
-    let options = getQueries(req);
+/**
+ * Gets the entire forecast.     
+ */
+app.get('/web/getForecast', async (req, res) => {
+    let parameters = getParameters(req);
 
-    if (!options.location) {
-        geolocation.geolocate(req.ip).then((geo) => {
-            options.location = {
-                latitude: geo.latitude,
-                longitude: geo.longitude
-            };
-
-            darkSky.getForecast(options).then((forecast) => {
-                res.send(forecast);
-            });
-        });
-    } else {
-        darkSky.getForecast(options).then((forecast) => {
-            res.send(forecast);
-        });
+    if (!parameters.location) {
+        let geo = await geolocation.geolocate(req.ip);
+        
+        parameters.location = {
+            latitude: geo.latitude,
+            longitude: geo.longitude
+        }
     }
+
+    res.send(await darkSky.getForecast(parameters));
 });
 
+/**
+ * Gets only the current forecast.
+ */
+app.get('/web/getCurrently', (req, res) => {
+    let parameters = getParameters(req);
 
-app.get('/web/forecast/getCurrently', (req, res) => {
-    let options = getQueries(req);
-
-    if (!options.location) {
-        geolocation.geolocate(req.ip).then((geo) => {
-            options.location = {
-                latitude: geo.latitude,
-                longitude: geo.longitude
-            };
-
-            darkSky.getCurrentForecast(options).then((forecast) => {
-                res.send(forecast);
-            });
-        });
-    } else {
-        darkSky.getCurrentForecast(options).then((forecast) => {
-            res.send(forecast);
-        });
+    if (!parameters.location) {
+        let geo = await geolocation.geolocate(req.ip);
+        
+        parameters.location = {
+            latitude: geo.latitude,
+            longitude: geo.longitude
+        }
     }
+
+    res.send(await darkSky.getCurrentForecast(parameters));
 });
 
-app.get('/web/forecast/getMinutely', (req, res) => {
-    let options = getQueries(req);
+/**
+ * Gets only the minute-by-minute forecast.
+ */
+app.get('/web/getMinutely', (req, res) => {
+    let parameters = getParameters(req);
 
-    if (!options.location) {
-        geolocation.geolocate(req.ip).then((geo) => {
-            options.location = {
-                latitude: geo.latitude,
-                longitude: geo.longitude
-            };
-
-            darkSky.getMinutelyForecast(options).then((forecast) => {
-                res.send(forecast);
-            });
-        });
-    } else {
-        darkSky.getMinutelyForecast(options).then((forecast) => {
-            res.send(forecast);
-        });
+    if (!parameters.location) {
+        let geo = await geolocation.geolocate(req.ip);
+        
+        parameters.location = {
+            latitude: geo.latitude,
+            longitude: geo.longitude
+        }
     }
+
+    res.send(await darkSky.getMinutelyForecast(parameters));
 });
 
-app.get('/web/forecast/getHourly', (req, res) => {
-    let options = getQueries(req);
+/**
+ * Gets only the hour-by-hour forecast.
+ */
+app.get('/web/getHourly', (req, res) => {
+    let parameters = getParameters(req);
 
-    if (!options.location) {
-        geolocation.geolocate(req.ip).then((geo) => {
-            options.location = {
-                latitude: geo.latitude,
-                longitude: geo.longitude
-            };
-
-            darkSky.getHourlyForecast(options).then((forecast) => {
-                res.send(forecast);
-            });
-        });
-    } else {
-        darkSky.getHourlyForecast(options).then((forecast) => {
-            res.send(forecast);
-        });
+    if (!parameters.location) {
+        let geo = await geolocation.geolocate(req.ip);
+        
+        parameters.location = {
+            latitude: geo.latitude,
+            longitude: geo.longitude
+        }
     }
+
+    res.send(await darkSky.getHourlyForecast(parameters));
 });
 
-app.get('/web/forecast/getDaily', (req, res) => {
-    let options = getQueries(req);
+/**
+ * Gets only the daily forecast.
+ */
+app.get('/web/getDaily', (req, res) => {
+    let parameters = getParameters(req);
 
-    if (!options.location) {
-        geolocation.geolocate(req.ip).then((geo) => {
-            options.location = {
-                latitude: geo.latitude,
-                longitude: geo.longitude
-            };
-
-            darkSky.getDailyForecast(options).then((forecast) => {
-                res.send(forecast);
-            });
-        });
-    } else {
-        darkSky.getDailyForecast(options).then((forecast) => {
-            res.send(forecast);
-        });
+    if (!parameters.location) {
+        let geo = await geolocation.geolocate(req.ip);
+        
+        parameters.location = {
+            latitude: geo.latitude,
+            longitude: geo.longitude
+        }
     }
+
+    res.send(await darkSky.getDailyForecast(parameters));
 });
 
-app.get('/web/forecast/getAlerts', (req, res) => {
-    let options = getQueries(req);
+/**
+ * Gets only the alerts.
+ */
+app.get('/web/getAlerts', (req, res) => {
+    let parameters = getParameters(req);
 
-    if (!options.location) {
-        geolocation.geolocate(req.ip).then((geo) => {
-            options.location = {
-                latitude: geo.latitude,
-                longitude: geo.longitude
-            };
-
-            darkSky.getAlerts(options).then((forecast) => {
-                res.send(forecast);
-            });
-        });
-    } else {
-        darkSky.getAlerts(options).then((forecast) => {
-            res.send(forecast);
-        });
+    if (!parameters.location) {
+        let geo = await geolocation.geolocate(req.ip);
+        
+        parameters.location = {
+            latitude: geo.latitude,
+            longitude: geo.longitude
+        }
     }
+
+    res.send(await darkSky.getAlerts(parameters));
+
+    // let options = getQueries(req);
+
+    // if (!options.location) {
+    //     geolocation.geolocate(req.ip).then((geo) => {
+    //         options.location = {
+    //             latitude: geo.latitude,
+    //             longitude: geo.longitude
+    //         };
+
+    //         darkSky.getAlerts(options).then((forecast) => {
+    //             res.send(forecast);
+    //         });
+    //     });
+    // } else {
+    //     darkSky.getAlerts(options).then((forecast) => {
+    //         res.send(forecast);
+    //     });
+    // }
 });
 
-function getQueries(req) {
+/**
+ * Extracts queries from the http request.
+ * 
+ * @param {object} request http request.
+ * 
+ * @return an object containing the queries from req.
+ */
+function getParameters(request) {
+    // TODO: find a cleaner way to do this
     return {
-        location: {
-            latitude: req.query.latitude,
-            longitude: req.query.longitude
+        location: !request.query.location ? undefined : {
+            latitude: request.query.latitude,
+            longitude: request.query.longitude
         },
-        language: req.query.language,
-        units: req.query.units,
-        extend: req.query.extend
+        language: request.query.language,
+        units: request.query.units,
+        extend: request.query.extend
     };
 }
 
-// /**
-//  * TODO
-//  * 
-//  * @param {Promise} forecast resolves to requested forecast
-//  * @param {Object} options request query fragments
-//  * @param {Object} req http response
-//  * @param {Object} res http request
-//  */
-// function sendResponse(forecast, options, req, res) {
-//     if (!options.location) {
-//         geolocation.geolocate(req.ip).then((geo) => {
-//             options.location = {
-//                 latitude: geo.latitude,
-//                 longitude: geo.longitude
-//             };
-
-//             forecast.then((forecast) => {
-//                 res.send(forecast);
-//             });
-//         }).catch((er) => {
-//             console.log(er);
-//         });
-//     } else {
-//         forecast(options).then((forecast) => {
-//             res.send(forecast);
-//         });
-//     }
-// }
-
-app.listen(port, '0.0.0.0', () => console.log(`WeatherBox listening on port ${port}`));
+app.listen(port, '0.0.0.0', () => {
+    console.log(`WeatherBox listening on port ${port}`);
+});

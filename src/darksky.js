@@ -1,5 +1,8 @@
 const rp = require('request-promise');
 
+/**
+ * Client interface for making forecast requests to DarkSky.net.
+ */
 class DarkSky {
     constructor(config) {
         this.config = config;
@@ -17,6 +20,8 @@ class DarkSky {
             .units(options.units)
             .extend(options.extend)
             .build();
+
+        console.log(request);
 
         return this._makeRequest(request);
     }
