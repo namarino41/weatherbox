@@ -23,18 +23,14 @@ class Geolocation {
         // find the public IP of this machine make a geolocation request.
         // If the requestIp is not private, it's public, so request a 
         // geolocation for that IP.
-        if (this._isPrivateIP(requestIp)) {
+        if (this._isPrivateIp(requestIp)) {
             return this._geolocate(await publicIp.v4());
-     
-            // return publicIp.v4().then((publicIp) => {
-            //     return this._geolocate(publicIp);
-            // });
         } else {
             return this._geolocate(requestIp);
         }
     }
 
-    _isPrivateIP(ip) {
+    _isPrivateIp(ip) {
         var parts = ip.split('.');
 
         return ip == 'localhost' ||

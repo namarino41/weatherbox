@@ -13,12 +13,12 @@ class DarkSky {
      * 
      * @return {Promise} promise containing the entire forecast.
      */
-    getForecast(options) {
+    getForecast(parameters) {
         const request = new RequestBuilder(this.config)
-            .location(options.location)
-            .language(options.language)
-            .units(options.units)
-            .extend(options.extend)
+            .location(parameters.location)
+            .language(parameters.language)
+            .units(parameters.units)
+            .extend(parameters.extend)
             .build();
 
         console.log(request);
@@ -31,12 +31,12 @@ class DarkSky {
      * 
      * @return {Promise} promise containing the 'currently' forecast.
      */
-    getCurrentForecast(options) {
+    getCurrentForecast(parameters) {
         const request = new RequestBuilder(this.config)
-            .location(options.location)
-            .language(options.language)
-            .units(options.units)
-            .extend(options.extend)
+            .location(parameters.location)
+            .language(parameters.language)
+            .units(parameters.units)
+            .extend(parameters.extend)
             .exclude(['minutely', 'hourly', 'daily', 'alerts'])
             .build();
         
@@ -48,12 +48,12 @@ class DarkSky {
      * 
      * @return {Promise} promise containing the 'minutely' forecast.
      */
-    getMinutelyForecast(options) {
+    getMinutelyForecast(parameters) {
         const request = new RequestBuilder(this.config)
-            .location(options.location)    
-            .language(options.language)
-            .units(options.units)
-            .extend(options.extend)
+            .location(parameters.location)    
+            .language(parameters.language)
+            .units(parameters.units)
+            .extend(parameters.extend)
             .exclude(['currently', 'hourly', 'daily', 'alerts'])
             .build();
 
@@ -65,12 +65,12 @@ class DarkSky {
      * 
      * @return {Promise} promise containing the 'hourly' forecast.
      */
-    getHourlyForecast(options) {
+    getHourlyForecast(parameters) {
         const request = new RequestBuilder(this.config)
-            .location(options.location)
-            .language(options.language)
-            .units(options.units)
-            .extend(options.extend)
+            .location(parameters.location)
+            .language(parameters.language)
+            .units(parameters.units)
+            .extend(parameters.extend)
             .exclude(['currently', 'minutely', 'daily', 'alerts'])
             .build();
 
@@ -82,12 +82,12 @@ class DarkSky {
      * 
      * @return {Promise} promise containg the 'daily' forecast.
      */
-    getDailyForecast(options) {
+    getDailyForecast(parameters) {
         const request = new RequestBuilder(this.config)
-            .location(options.location)
-            .language(options.language)
-            .units(options.units)
-            .extend(options.extend)
+            .location(parameters.location)
+            .language(parameters.language)
+            .units(parameters.units)
+            .extend(parameters.extend)
             .exclude(['currently', 'minutely', 'hourly', 'alerts'])
             .build();
 
@@ -99,12 +99,12 @@ class DarkSky {
      * 
      * @return {Promise} promise containing the 'alerts'.
      */
-    getAlerts(options) {
+    getAlerts(parameters) {
         const request = new RequestBuilder(this.config)
-            .location(options.location)
-            .language(options.language)
-            .units(options.units)
-            .extend(options.extend)
+            .location(parameters.location)
+            .language(parameters.language)
+            .units(parameters.units)
+            .extend(parameters.extend)
             .exclude(['currently', 'minutely', 'hourly', 'daily'])
             .build();
         
@@ -173,20 +173,20 @@ class RequestBuilder {
 
     build() {
         let request = `${this.baseEndpoint}/${this.loc}`;
-        let options = [];
+        let parameters = [];
         
         if (this.tim)
-            options.push(this.tim);
+            parameters.push(this.tim);
         if (this.excl)
-            options.push(this.excl);
+            parameters.push(this.excl);
         if (this.ext)
-            options.push(this.ext);
+            parameters.push(this.ext);
         if (this.lang)
-            options.push(this.lang);
+            parameters.push(this.lang);
         if (this.uni)
-            options.push(this.uni);
+            parameters.push(this.uni);
 
-        request = `${request}${options.join('&')}`;
+        request = `${request}${parameters.join('&')}`;
 
         return request;
     }
