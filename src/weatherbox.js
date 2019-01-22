@@ -4,6 +4,14 @@
  * Base URL:
  *      http://[ip-address]:3000/
  * 
+ * Subscription request:
+ *      POST http://[ip-address]:3000/subscribe
+ *      body: {
+ *          location: ...
+ *          language: ...
+ *          ...
+ *      }    
+ * 
  * Web forecast requests:
  *      - Full forecast:
  *          
@@ -43,7 +51,7 @@ darkSky = new darkSky(darkSkyConfig);
 geolocation = new geolocation(geoConfig);
 
 /**
- * 
+ * Registers the client and it's desired DarkSky parameters.
  */
 app.post('/web/subscribe', async (req, res) => {
     const clientId = uuidv1();
