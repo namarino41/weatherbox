@@ -1,4 +1,4 @@
 package-lock.json
-/node_modules
-/config
-
+weatherbox/node_modules
+weatherbox/package-lock.json
+.vscode
