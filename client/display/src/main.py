@@ -13,8 +13,6 @@ try:
     
     # Drawing on the Horizontal image
     Himage = Image.new('1', (epd4in2.EPD_WIDTH, epd4in2.EPD_HEIGHT), 255)  # 255: clear the frame
-    # Drawing on the Vertical image
-    Limage = Image.new('1', (epd4in2.EPD_HEIGHT, epd4in2.EPD_WIDTH), 255)  # 255: clear the frame
     
     # Horizontal
     print("Drawing")
