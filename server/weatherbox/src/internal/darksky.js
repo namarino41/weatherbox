@@ -13,7 +13,7 @@ class DarkSky {
      * 
      * @return {Promise} promise containing the entire forecast.
      */
-    getForecast(parameters) {
+    getFullForecast(parameters) {
         const request = new RequestBuilder(this.config)
             .location(parameters.location)
             .language(parameters.language)

@@ -48,6 +48,7 @@ geolocation = new geolocation(geoConfig);
  */
 app.post('/web/subscribe', async (req, res) => {
     const clientId = uuidv1();
+    console.log(clientId)
 
     if (!subscriptions.clientId) {
         let parameters = req.body;
@@ -69,7 +70,7 @@ app.post('/web/subscribe', async (req, res) => {
 /**
  * Gets the entire forecast.     
  */
-app.get('/web/getForecast', async (req, res) => {
+app.get('/web/getFull', async (req, res) => {
     const clientId = req.query.clientId;
 
     if (!subscriptions[clientId]) {
@@ -77,7 +78,7 @@ app.get('/web/getForecast', async (req, res) => {
         return;
     }
 
-    res.send(await darkSky.getForecast(subscriptions[clientId].parameters));
+    res.send(await darkSky.getFullForecast(subscriptions[clientId].parameters));
 });
 
 /**
@@ -91,7 +92,7 @@ app.get('/web/getCurrently', async (req, res) => {
         return;
     }
 
-    res.send(await darkSky.getForecast(subscriptions[clientId].parameters));
+    res.send(await darkSky.getCurrentForecast(subscriptions[clientId].parameters));
 });
 
 /**
