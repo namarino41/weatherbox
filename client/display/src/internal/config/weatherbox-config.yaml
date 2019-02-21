@@ -1,0 +1,5 @@
+weatherbox:
+  endpoint: "http://localhost:3000"
+  location:
+    latitude: "your latitude here"
+    longitude: "your longitude here"

@@ -31,8 +31,8 @@ const express = require('express');
 const bodyParser = require("body-parser");
 let darkSky = require('./internal/darksky.js');
 let geolocation = require('./internal/geolocation.js');
-let darkSkyConfig = require('../config/darksky-config');
-let geoConfig = require('../config/ipstack-config.json');
+let darkSkyConfig = require('./internal/config/darksky-config.json');
+let geoConfig = require('./internal/config/ipstack-config.json');
 const uuidv1 = require('uuid/v1');
 let {subscriptions, subscription} = require('./internal/subscription-service.js');
 
@@ -149,26 +149,6 @@ app.get('/web/getAlerts', async (req, res) => {
 
     res.send(await darkSky.getAlerts(subscriptions[clientId].parameters));
 });
-
-/**
- * Extracts parameters from the http request.
- * 
- * @param {object} request http request.
- * 
- * @return an object containing the parameters from req.
- */
-function getParameters(request) {
-    // TODO: find a cleaner way to do this
-    return {
-        location: !request.query.location ? undefined : {
-            latitude: request.query.latitude,
-            longitude: request.query.longitude
-        },
-        language: request.query.language,
-        units: request.query.units,
-        extend: request.query.extend
-    };
-}
 
 app.listen(port, '0.0.0.0', () => {
     console.log(`WeatherBox listening on port ${port}`);
