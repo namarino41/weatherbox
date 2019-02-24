@@ -2,12 +2,12 @@
 
 from PIL import Image,ImageDraw,ImageFont
 
-image = Image.open("/Users/nickmarino/weatherbox/client/display/assets/UI.png")
+image = Image.open("/Users/nickmarino/weatherbox/client/display/resources/UI.png")
 draw = ImageDraw.Draw(image)
-image2 = Image.open("/Users/nickmarino/weatherbox/client/display/assets/icons/current/day-partly-cloudy.png")
+image2 = Image.open("/Users/nickmarino/weatherbox/client/display/resources/icons/current/day-partly-cloudy.png")
 h,w = image2.size
 image.paste(image2, (10, 35), image2)
-font_path = "/Users/nickmarino/Library/Fonts/Roboto-Medium.ttf"
+font_path = "Roboto-Medium.ttf"
 font_path_2 = "/Users/nickmarino/Library/Fonts/Roboto-Light.ttf"
 font = ImageFont.truetype(font_path, 35)
 font2 = ImageFont.truetype(font_path, 15)
@@ -29,7 +29,7 @@ draw.text((185 + (95-h3)/2, 105), "Wind: 100 mph", font=font4)
 ################################
 h, w = draw.textsize("Today", font=font4)
 draw.text(((80-h)/2, 130), "Today", font=font4)
-test = Image.open("/Users/nickmarino/weatherbox/client/display/assets/icons/daily/fog.png")
+test = Image.open("/Users/nickmarino/weatherbox/client/display/resources/icons/daily/fog.png")
 image.paste(test, ((80-55)//2, 140), test)
 draw.text((20, 190), "45˚ / 22˚", font=font4)
 #draw.text((40, 185), "22˚", font=font4)

@@ -1,7 +1,5 @@
-weatherbox:
-  endpoint: "http://localhost:3000"
-  options:
-      - location:
-          latitude: "your latitude here"
-          longitude: "your longitude here"
-      - language: "en"
+endpoint: "http://localhost:3000"
+options:
+    - location:
+        latitude: 38.807540
+        longitude: -77.350780

@@ -52,6 +52,7 @@ app.post('/web/subscribe', async (req, res) => {
 
     if (!subscriptions.clientId) {
         let parameters = req.body;
+        console.log(req)
 
         if (!parameters.location) {
             let geo = await geolocation.geolocate(req.ip);

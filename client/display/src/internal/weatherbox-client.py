@@ -1,4 +1,3 @@
-import json
 import requests
 import yaml
 
@@ -14,28 +13,27 @@ hourly = '/web/getHourly'
 daily = '/web/getDaily'
 alerts = '/web/getAlerts'
 
-
 class WeatherboxClient:
     ''' A client for communicating with the Weatherbox service. '''
     
     def __init__(self):
         with open(weatherbox_config, 'r') as stream:
             try: 
-                config = yaml.load(stream)['weatherbox']
+                config = yaml.load(stream)
                 self.endpoint = config['endpoint']
 
                 options = {}
                 for opt in config['options']:
                     options.update(opt)
 
-                self.clientId = self._subscribe(json.dumps(options))
+                self.clientId = self._subscribe(options)
             except yaml.YAMLError as exc:
                 print(exc)
     
     def _subscribe(self, options):
         ''' Subscribes the client to the Weatherbox service '''
         endpoint = self.endpoint + subscribe
-        clientId = requests.post(endpoint, options).text
+        clientId = requests.post(endpoint, json=options).text
         return clientId
 
     def _getForecast(self, forecastType):
@@ -64,3 +62,5 @@ class WeatherboxClient:
     def getAlerts(self):
         ''' Gets the alerts '''
         return self._getForecast(alerts)
+
+WeatherboxClient().getFullForecast()
