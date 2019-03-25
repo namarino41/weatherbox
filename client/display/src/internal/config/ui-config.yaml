@@ -3,18 +3,29 @@ main-panel:
     x: 400
     y: 300
 
-date:
-  position: 
-    x: 5
-    y: 5
+date-panel:
+  position:
+    x: 0
+    y: 0
+  size: 
+    x: 400
+    y: 30
   font:
     font: 'Roboto-Medium.ttf'
     font-size: 15
   
-current:
-  position: 
-    x: 0
-    y: 30
+current-panel:
+  icon-panel:
+    position: 
+      x: 0
+      y: 30
+    size: 
+      x: 90
+      y: 95
+    icon-position: 
+      x: 10
+      y: 35
+
   size: 
     x: 280
     y: 95
@@ -22,9 +33,6 @@ current:
     position: 
       x: 10
       y: 35
-    size:
-      x: 80
-      y: 80
   condition-panel:
     position: 
       x: 90

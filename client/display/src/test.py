@@ -4,7 +4,7 @@ from PIL import Image,ImageDraw,ImageFont
 
 image = Image.open("/Users/nickmarino/weatherbox/client/display/resources/UI.png")
 draw = ImageDraw.Draw(image)
-image2 = Image.open("/Users/nickmarino/weatherbox/client/display/resources/icons/current/day-partly-cloudy.png")
+image2 = Image.open("/Users/nickmarino/weatherbox/client/display/resources/icons/currently/rain.png")
 h,w = image2.size
 image.paste(image2, (10, 35), image2)
 font_path = "Roboto-Medium.ttf"

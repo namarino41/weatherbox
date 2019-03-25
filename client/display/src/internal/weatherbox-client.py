@@ -43,24 +43,22 @@ class WeatherboxClient:
         forecast = requests.get(endpoint, params=params).json()
         return forecast
     
-    def getFullForecast(self):
+    def getFull(self):
         ''' Gets the full forecast '''
         return self._getForecast(full)
 
-    def getCurrentForecast(self):
+    def getCurrently(self):
         ''' Gets the current forecast '''
         return self._getForecast(currently)
 
-    def getMinutelyForecast(self):
+    def getMinutely(self):
         ''' Gets the minutely forecast '''
         return self._getForecast(minutely)
     
-    def getHourlyForecast(self):
+    def getHourly(self):
         ''' Gets the hourly forecast '''
         return self._getForecast(hourly)
 
     def getAlerts(self):
         ''' Gets the alerts '''
         return self._getForecast(alerts)
-
-WeatherboxClient().getFullForecast()

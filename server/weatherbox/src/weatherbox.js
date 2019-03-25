@@ -79,7 +79,7 @@ app.get('/web/getFull', async (req, res) => {
         return;
     }
 
-    res.send(await darkSky.getFullForecast(subscriptions[clientId].parameters));
+    res.send(await darkSky.getFull(subscriptions[clientId].parameters));
 });
 
 /**
@@ -93,7 +93,7 @@ app.get('/web/getCurrently', async (req, res) => {
         return;
     }
 
-    res.send(await darkSky.getCurrentForecast(subscriptions[clientId].parameters));
+    res.send(await darkSky.getCurrently(subscriptions[clientId].parameters));
 });
 
 /**
@@ -107,7 +107,7 @@ app.get('/web/getMinutely', async (req, res) => {
         return;
     }
 
-    res.send(await darkSky.getMinutelyForecast(subscriptions[clientId].parameters));
+    res.send(await darkSky.getMinutely(subscriptions[clientId].parameters));
 });
 
 /**
@@ -121,7 +121,7 @@ app.get('/web/getHourly', async (req, res) => {
         return;
     }
 
-    res.send(await darkSky.getHourlyForecast(subscriptions[clientId].parameters));
+    res.send(await darkSky.getHourly(subscriptions[clientId].parameters));
 });
 
 /**
@@ -135,7 +135,7 @@ app.get('/web/getDaily', async (req, res) => {
         return;
     }
 
-    res.send(await darkSky.getDailyForecast(subscriptions[clientId].parameters));
+    res.send(await darkSky.getDaily(subscriptions[clientId].parameters));
 });
 
 /**

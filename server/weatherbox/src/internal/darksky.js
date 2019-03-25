@@ -13,7 +13,7 @@ class DarkSky {
      * 
      * @return {Promise} promise containing the entire forecast.
      */
-    getFullForecast(parameters) {
+    getFull(parameters) {
         const request = new RequestBuilder(this.config)
             .location(parameters.location)
             .language(parameters.language)
@@ -31,7 +31,7 @@ class DarkSky {
      * 
      * @return {Promise} promise containing the 'currently' forecast.
      */
-    getCurrentForecast(parameters) {
+    getCurrently(parameters) {
         const request = new RequestBuilder(this.config)
             .location(parameters.location)
             .language(parameters.language)
@@ -48,7 +48,7 @@ class DarkSky {
      * 
      * @return {Promise} promise containing the 'minutely' forecast.
      */
-    getMinutelyForecast(parameters) {
+    getMinutely(parameters) {
         const request = new RequestBuilder(this.config)
             .location(parameters.location)    
             .language(parameters.language)
@@ -65,7 +65,7 @@ class DarkSky {
      * 
      * @return {Promise} promise containing the 'hourly' forecast.
      */
-    getHourlyForecast(parameters) {
+    getHourly(parameters) {
         const request = new RequestBuilder(this.config)
             .location(parameters.location)
             .language(parameters.language)
@@ -82,7 +82,7 @@ class DarkSky {
      * 
      * @return {Promise} promise containg the 'daily' forecast.
      */
-    getDailyForecast(parameters) {
+    getDaily(parameters) {
         const request = new RequestBuilder(this.config)
             .location(parameters.location)
             .language(parameters.language)
