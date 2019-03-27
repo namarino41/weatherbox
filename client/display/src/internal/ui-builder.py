@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from PIL import Image,ImageDraw,ImageFont
 
 currentlyIconPath = '/Users/nickmarino/weatherbox/client/display/resources/icons/currently/'
@@ -16,9 +18,11 @@ class CurrentPanel:
         SIZE = (90, 95)
         ICON_POSITION = (10, 5)
     class ConditionsPanel:
-        PANEL_POSITION = (90, 30)
-        SIZE = (190, 30)
+        PANEL_POSITION = (90, 0)
+        SIZE = (190, 95)
         TEMP_FONT = ImageFont.truetype('Roboto-Medium.ttf', 35)
+        FEELS_LIKE_FONT = ImageFont.truetype('Roboto-Medium.ttf', 11)
+        SUMMARY_FONT = ImageFont.truetype('Roboto-Medium.ttf', 15)
     
 class UIBuilder:
     def __init__(self, baseUi):
@@ -36,7 +40,12 @@ class UIBuilder:
         icon = self._currentlyIcon(currentForecast['currently']['icon'])
         panel.paste(icon, CurrentPanel.IconPanel.PANEL_POSITION, icon)
 
+        conditions = self._currentlyConditions(currentForecast['currently'])
+        panel.paste(conditions, CurrentPanel.ConditionsPanel.PANEL_POSITION, conditions)
+
+
         self.ui.paste(panel, CurrentPanel.PANEL_POSITION, panel)
+
         self.ui.show()
                 
     def _currentlyIcon(self, iconProp):
@@ -47,11 +56,39 @@ class UIBuilder:
 
         return panel
     
-    # def _currentlyConditions(self, conditions):
-    #     panel = self._createPanel(CurrentPanel.ConditionsPanel.SIZE)
 
-    #     return        
+
+
+
+
+
+    def _currentlyConditions(self, conditions):
+        panel = self._createPanel(CurrentPanel.ConditionsPanel.SIZE)
+        draw = ImageDraw.Draw(panel)
         
+        temperature = str(int(conditions['temperature']))
+        feelsLike = str(int(conditions['apparentTemperature']))
+        summary = conditions['summary']
+        humidity = str(int(conditions['humidity'] * 100))
+        wind = str(int(conditions['windGust']))
+
+        h,w = draw.textsize("{}˚".format(temperature), font=CurrentPanel.ConditionsPanel.TEMP_FONT)
+        draw.text(((190-h)/2, 5), "{}˚".format(temperature), fill='black', font=CurrentPanel.ConditionsPanel.TEMP_FONT)
+        
+        h,w = draw.textsize("Feels like {}˚".format(feelsLike), font=CurrentPanel.ConditionsPanel.FEELS_LIKE_FONT)
+        draw.text(((190-h)/2, 40), "Feels like {}˚".format(feelsLike), fill='black', font=CurrentPanel.ConditionsPanel.FEELS_LIKE_FONT)
+
+        h,w = draw.textsize("{}".format(summary), font=CurrentPanel.ConditionsPanel.SUMMARY_FONT)
+        draw.text(((190-h)/2, 55), "{}".format(summary), fill='black', font=CurrentPanel.ConditionsPanel.SUMMARY_FONT)
+
+        h,w = draw.textsize("Humidity: {}%".format(humidity), font=CurrentPanel.ConditionsPanel.FEELS_LIKE_FONT)
+        draw.text(((95-h)/2, 75), "Humidity: {}%".format(humidity), fill='black', font=CurrentPanel.ConditionsPanel.FEELS_LIKE_FONT)
+
+        h,w = draw.textsize("Wind: {} mph".format(wind), font=CurrentPanel.ConditionsPanel.FEELS_LIKE_FONT)
+        draw.text((90 + (95-h)/2, 75), "Wind: {} mph".format(wind), fill='black', font=CurrentPanel.ConditionsPanel.FEELS_LIKE_FONT)
+
+        return panel        
+
     def _createPanel(self, size):
         return Image.new('RGBA', size, (255, 255, 255))
 
