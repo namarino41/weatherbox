@@ -3,59 +3,59 @@
 from PIL import Image,ImageDraw,ImageFont
 from datetime import datetime
 
-baseUi = '/Users/nickmarino/weatherbox/client/display/resources/UI.png'
-currentlyIconPath = '/Users/nickmarino/weatherbox/client/display/resources/icons/currently/'
-dailyIconPath = '/Users/nickmarino/weatherbox/client/display/resources/icons/daily/'
+baseUi = '/Users/nickmarino/weatherbox/client/display/assets/UI.png'
+currentlyIconPath = '/Users/nickmarino/weatherbox/client/display/assets/icons/currently/'
+dailyIconPath = '/Users/nickmarino/weatherbox/client/display/assets/icons/daily/'
 
 
-class DatePanel:
-    PANEL_POSITION = (0, 0)
-    SIZE = (400, 30)
+# class DatePanel:
+#     PANEL_POSITION = (0, 0)
+#     SIZE = (400, 30)
 
-    DATE_POSITION = (5,6)
-    FONT = ImageFont.truetype('Roboto-Medium.ttf', 15)
+#     DATE_POSITION = (5,6)
+#     FONT = ImageFont.truetype('Roboto-Medium.ttf', 15)
 
-class CurrentlyPanel:
-    PANEL_POSITION = (0, 31)
-    SIZE = (280, 94)
+# class CurrentlyPanel:
+#     PANEL_POSITION = (0, 31)
+#     SIZE = (280, 94)
 
-    class IconPanel:
-        PANEL_POSITION = (0, 0)
-        SIZE = (90, 95)
-        ICON_POSITION = (10, 5)
-    class ConditionsPanel:
-        PANEL_POSITION = (90, 0)
-        SIZE = (190, 95)
+#     class IconPanel:
+#         PANEL_POSITION = (0, 0)
+#         SIZE = (90, 95)
+#         ICON_POSITION = (10, 5)
+#     class ConditionsPanel:
+#         PANEL_POSITION = (90, 0)
+#         SIZE = (190, 95)
 
-        TEMP_POSITION_Y = 5
-        TEMP_FONT = ImageFont.truetype('Roboto-Medium.ttf', 35)
+#         TEMP_POSITION_Y = 5
+#         TEMP_FONT = ImageFont.truetype('Roboto-Medium.ttf', 35)
 
-        FEELS_LIKE_POSITION_Y = 40
-        FEELS_LIKE_FONT = ImageFont.truetype('Roboto-Medium.ttf', 11)
+#         FEELS_LIKE_POSITION_Y = 40
+#         FEELS_LIKE_FONT = ImageFont.truetype('Roboto-Medium.ttf', 11)
 
-        SUMMARY_POSITION_Y = 55
-        SUMMARY_FONT = ImageFont.truetype('Roboto-Medium.ttf', 15)
+#         SUMMARY_POSITION_Y = 55
+#         SUMMARY_FONT = ImageFont.truetype('Roboto-Medium.ttf', 15)
 
-        HUMIDITY_POSITION_Y = 75
-        HUMIDITY_FONT = ImageFont.truetype('Roboto-Medium.ttf', 11)
+#         HUMIDITY_POSITION_Y = 75
+#         HUMIDITY_FONT = ImageFont.truetype('Roboto-Medium.ttf', 11)
 
-        WIND_POSITION_Y = 75
-        HUMIDITY_FONT = ImageFont.truetype('Roboto-Medium.ttf', 11)
+#         WIND_POSITION_Y = 75
+#         HUMIDITY_FONT = ImageFont.truetype('Roboto-Medium.ttf', 11)
 
-class DailyPanel:
-    PANEL_POSITION = (0, 126)
-    SIZE = (79, 99)
+# class DailyPanel:
+#     PANEL_POSITION = (0, 126)
+#     SIZE = (79, 99)
 
-    DAY_LOCATION_Y = 5
-    DAY_FONT = ImageFont.truetype('Roboto-Medium.ttf', 11)
+#     DAY_LOCATION_Y = 5
+#     DAY_FONT = ImageFont.truetype('Roboto-Medium.ttf', 11)
 
-    ICON_POSITION_Y= 15
+#     ICON_POSITION_Y= 15
 
-    TEMP_POSITION_Y = 65
-    TEMP_FONT = ImageFont.truetype('Roboto-Medium.ttf', 11)
+#     TEMP_POSITION_Y = 65
+#     TEMP_FONT = ImageFont.truetype('Roboto-Medium.ttf', 11)
 
-    SUMMARY_POSITION_Y = 80
-    SUMMARY_FONT = ImageFont.truetype('Roboto-Medium.ttf', 11)
+#     SUMMARY_POSITION_Y = 80
+#     SUMMARY_FONT = ImageFont.truetype('Roboto-Medium.ttf', 11)
 
 
 class UIBuilder:
@@ -63,75 +63,66 @@ class UIBuilder:
         self.ui = Image.open(baseUi)
 
     def date(self, date):
-        panel = self._createPanel(DatePanel.SIZE) 
-        ImageDraw.Draw(panel).text(DatePanel.DATE_POSITION, date, fill='black', font=DatePanel.FONT)
-        self.ui.paste(panel, DatePanel.PANEL_POSITION, panel)
+        panel = self._createPanel((400, 30)) 
+        ImageDraw.Draw(panel).text((5,6), date, fill='black', font=ImageFont.truetype('Roboto-Medium.ttf', 15))
+        self.ui.paste(panel, (0, 0), panel)
         return self
 
     def currently(self, currentlyForecast):
-        panel = self._createPanel(CurrentlyPanel.SIZE)
+        panel = self._createPanel((280, 94))
 
         icon = self._currentlyIcon(currentlyForecast['currently']['icon'])
-        panel.paste(icon, CurrentlyPanel.IconPanel.PANEL_POSITION, icon)
+        panel.paste(icon, (0, 0), icon)
 
         conditions = self._currentlyConditions(currentlyForecast['currently'])
-        panel.paste(conditions, CurrentlyPanel.ConditionsPanel.PANEL_POSITION, conditions)
+        panel.paste(conditions, (90, 0), conditions)
 
-        self.ui.paste(panel, CurrentlyPanel.PANEL_POSITION, panel)
+        self.ui.paste(panel, (0, 31), panel)
         self.ui.show()
+
         return self
 
     def daily(self, dailyForecast):
         for i in range(0, 5):
-            panel = self._createPanel(DailyPanel.SIZE)
+            panel = self._createPanel((79, 99))
             draw = ImageDraw.Draw(panel)
             
             day = datetime.fromtimestamp( \
                 dailyForecast['daily']['data'][i]['time']).strftime("%A")
             h,w = draw.textsize("{}".format(day), \
-                font=DailyPanel.DAY_FONT)
-            draw.text((((DailyPanel.SIZE[0] - h) / 2), DailyPanel.DAY_LOCATION_Y), \
-                day, fill='black', font=DailyPanel.DAY_FONT)
+                font=ImageFont.truetype('Roboto-Medium.ttf', 11))
+            draw.text((((79 - h) / 2), 5), \
+                day, fill='black', font=ImageFont.truetype('Roboto-Medium.ttf', 11))
              
             icon = self._getIcon('daily', dailyForecast['daily']['data'][i]['icon'])
-            panel.paste(icon, ((80-55)//2, DailyPanel.ICON_POSITION_Y), icon)
+            panel.paste(icon, ((80-55)//2, 15), icon)
 
             highTemp = int(dailyForecast['daily']['data'][i]['temperatureHigh'])
             lowTemp = int(dailyForecast['daily']['data'][i]['temperatureLow'])
 
-            h,w = draw.textsize("{}˚/{}˚".format(highTemp, lowTemp), \
-                font=DailyPanel.TEMP_FONT)
-            draw.text(((79-h)/2, DailyPanel.TEMP_POSITION_Y), "{}˚/{}˚".format(lowTemp, highTemp), fill='black', font=DailyPanel.TEMP_FONT)
-            
+            h,w = draw.textsize("{}\xb0/{}\xb0".format(highTemp, lowTemp), \
+                font=ImageFont.truetype('Roboto-Medium.ttf', 11))
+            draw.text(((79-h)/2, 65), "{}\xb0/{}\xb0".format(lowTemp, highTemp), fill='black', font=ImageFont.truetype('Roboto-Medium.ttf', 11))         
+
             h,w = draw.textsize("Clear", \
-                font=DailyPanel.TEMP_FONT)
-            draw.text(((79-h)/2, DailyPanel.SUMMARY_POSITION_Y), "Clear", fill='black', font=DailyPanel.TEMP_FONT)
+                font=ImageFont.truetype('Roboto-Medium.ttf', 11))
+            draw.text(((79-h)/2, 80), "Clear", fill='black', font=ImageFont.truetype('Roboto-Medium.ttf', 11))
 
-
-            self.ui.paste(panel, \
-                (DailyPanel.PANEL_POSITION[0] + (80 * i), DailyPanel.PANEL_POSITION[1]), panel)
+            self.ui.paste(panel, ((80 * i), 126), panel)
 
         self.ui.show()
-            
-
-
-
-        
+        return self
+             
     def _currentlyIcon(self, iconProp):
-        iconPanel = CurrentlyPanel.IconPanel
-
-        panel = self._createPanel(iconPanel.SIZE)
+        panel = self._createPanel((90, 95))
 
         icon = self._getIcon('currently', iconProp)
-        panel.paste(icon, iconPanel.ICON_POSITION, icon)
+        panel.paste(icon, (10, 5), icon)
 
         return panel
 
     def _currentlyConditions(self, conditions):
-        conditionsPanel = CurrentlyPanel.ConditionsPanel
-        conditionsPanelSize = conditionsPanel.SIZE
-
-        panel = self._createPanel(conditionsPanel.SIZE)
+        panel = self._createPanel((190, 95))
         draw = ImageDraw.Draw(panel)
         
         temperature = str(int(conditions['temperature']))
@@ -141,34 +132,34 @@ class UIBuilder:
         wind = str(int(conditions['windGust']))
 
         # Draw temperature.
-        h,w = draw.textsize("{}˚".format(temperature), \
-            font=conditionsPanel.TEMP_FONT)
-        draw.text(((conditionsPanelSize[0] - h) / 2, conditionsPanel.TEMP_POSITION_Y), \
-            "{}˚".format(temperature), fill='black', font=conditionsPanel.TEMP_FONT)
-        
+        h,w = draw.textsize("{}\xb0".format(temperature), \
+            font=ImageFont.truetype('Roboto-Medium.ttf', 35))
+        draw.text(((190 - h) / 2, 5), \
+            "{}\xb0".format(temperature), fill='black', font=ImageFont.truetype('Roboto-Medium.ttf', 35))
+
         # Draw 'feels like' temperature.
-        h,w = draw.textsize("Feels like {}˚".format(feelsLike), \
-            font=conditionsPanel.FEELS_LIKE_FONT)
-        draw.text(((conditionsPanelSize[0] - h) / 2, conditionsPanel.FEELS_LIKE_POSITION_Y), \
-            "Feels like {}˚".format(feelsLike), fill='black', font=conditionsPanel.FEELS_LIKE_FONT)
+        h,w = draw.textsize("Feels like {}\xb0".format(feelsLike), \
+            font=ImageFont.truetype('Roboto-Medium.ttf', 11))
+        draw.text(((190 - h) / 2, 40), \
+            "Feels like {}\xb0".format(feelsLike), fill='black', font=ImageFont.truetype('Roboto-Medium.ttf', 11))
 
         # Draw summary.
         h,w = draw.textsize("{}".format(summary), \
-            font=conditionsPanel.SUMMARY_FONT)
-        draw.text(((conditionsPanelSize[0] - h) / 2, conditionsPanel.SUMMARY_POSITION_Y), \
-            "{}".format(summary), fill='black', font=conditionsPanel.SUMMARY_FONT)
+            font=ImageFont.truetype('Roboto-Medium.ttf', 15))
+        draw.text(((190 - h) / 2, 55), \
+            "{}".format(summary), fill='black', font=ImageFont.truetype('Roboto-Medium.ttf', 15))
 
         # Draw humidity.
         h,w = draw.textsize("Humidity: {}%".format(humidity), \
-            font=conditionsPanel.FEELS_LIKE_FONT)
-        draw.text((((conditionsPanelSize[0] / 2) - h) / 2, conditionsPanel.HUMIDITY_POSITION_Y), \
-            "Humidity: {}%".format(humidity), fill='black', font=conditionsPanel.FEELS_LIKE_FONT)
+            font=ImageFont.truetype('Roboto-Medium.ttf', 11))
+        draw.text((((190 / 2) - h) / 2, 75), \
+            "Humidity: {}%".format(humidity), fill='black', font=ImageFont.truetype('Roboto-Medium.ttf', 11))
 
         # Draw wind.
         h,w = draw.textsize("Wind: {} mph".format(wind), \
-            font=conditionsPanel.FEELS_LIKE_FONT)
-        draw.text(((conditionsPanelSize[0] / 2) + ((conditionsPanelSize[0] / 2) - h) / 2, conditionsPanel.WIND_POSITION_Y), \
-            "Wind: {} mph".format(wind), fill='black', font=conditionsPanel.FEELS_LIKE_FONT)
+            font=ImageFont.truetype('Roboto-Medium.ttf', 11))
+        draw.text(((190 / 2) + ((190 / 2) - h) / 2, 75), \
+            "Wind: {} mph".format(wind), fill='black', font=ImageFont.truetype('Roboto-Medium.ttf', 11))
 
         return panel
 
@@ -209,5 +200,4 @@ test = {"latitude":37.8267,"longitude":-122.4233,"timezone":"America/Los_Angeles
 
 
 UIBuilder().date("janlajsdlkfjsdf") \
-    .daily(test)
-# .currently({"latitude":37.8267,"longitude":-122.4233,"timezone":"America/Los_Angeles","currently":{"time":1551195731,"summary":"Light Rain","icon":"rain","nearestStormDistance":0,"precipIntensity":0.0342,"precipIntensityError":0.0114,"precipProbability":1,"precipType":"rain","temperature":53.26,"apparentTemperature":53.26,"dewPoint":49.28,"humidity":0.86,"pressure":1013.19,"windSpeed":13.15,"windGust":24.85,"windBearing":164,"cloudCover":1,"uvIndex":0,"visibility":6.78,"ozone":278.39},"flags":{"sources":["nearest-precip","cmc","gfs","hrrr","icon","isd","madis","nam","sref","darksky"],"nearest-station":1.839,"units":"us"},"offset":-8})
+    .daily(test).currently({"latitude":37.8267,"longitude":-122.4233,"timezone":"America/Los_Angeles","currently":{"time":1551195731,"summary":"Light Rain","icon":"rain","nearestStormDistance":0,"precipIntensity":0.0342,"precipIntensityError":0.0114,"precipProbability":1,"precipType":"rain","temperature":53.26,"apparentTemperature":53.26,"dewPoint":49.28,"humidity":0.86,"pressure":1013.19,"windSpeed":13.15,"windGust":24.85,"windBearing":164,"cloudCover":1,"uvIndex":0,"visibility":6.78,"ozone":278.39},"flags":{"sources":["nearest-precip","cmc","gfs","hrrr","icon","isd","madis","nam","sref","darksky"],"nearest-station":1.839,"units":"us"},"offset":-8})
