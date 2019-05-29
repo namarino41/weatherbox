@@ -64,8 +64,10 @@ class UIBuilder:
 
     def date(self, date):
         panel = self._createPanel((400, 30)) 
-        ImageDraw.Draw(panel).text((5,6), date, fill='black', font=ImageFont.truetype('Roboto-Medium.ttf', 15))
+        ImageDraw.Draw(panel).text((5,6), date, fill='black', \
+            font=ImageFont.truetype('Roboto-Medium.ttf', 15))
         self.ui.paste(panel, (0, 0), panel)
+
         return self
 
     def currently(self, currentlyForecast):
@@ -84,35 +86,12 @@ class UIBuilder:
 
     def daily(self, dailyForecast):
         for i in range(0, 5):
-            panel = self._createPanel((79, 99))
-            draw = ImageDraw.Draw(panel)
-            
-            day = datetime.fromtimestamp( \
-                dailyForecast['daily']['data'][i]['time']).strftime("%A")
-            h,w = draw.textsize("{}".format(day), \
-                font=ImageFont.truetype('Roboto-Medium.ttf', 11))
-            draw.text((((79 - h) / 2), 5), \
-                day, fill='black', font=ImageFont.truetype('Roboto-Medium.ttf', 11))
-             
-            icon = self._getIcon('daily', dailyForecast['daily']['data'][i]['icon'])
-            panel.paste(icon, ((80-55)//2, 15), icon)
-
-            highTemp = int(dailyForecast['daily']['data'][i]['temperatureHigh'])
-            lowTemp = int(dailyForecast['daily']['data'][i]['temperatureLow'])
-
-            h,w = draw.textsize("{}\xb0/{}\xb0".format(highTemp, lowTemp), \
-                font=ImageFont.truetype('Roboto-Medium.ttf', 11))
-            draw.text(((79-h)/2, 65), "{}\xb0/{}\xb0".format(lowTemp, highTemp), fill='black', font=ImageFont.truetype('Roboto-Medium.ttf', 11))         
-
-            h,w = draw.textsize("Clear", \
-                font=ImageFont.truetype('Roboto-Medium.ttf', 11))
-            draw.text(((79-h)/2, 80), "Clear", fill='black', font=ImageFont.truetype('Roboto-Medium.ttf', 11))
-
+            panel = self._dailyConditions(dailyForecast['daily']['data'][i])
             self.ui.paste(panel, ((80 * i), 126), panel)
 
         self.ui.show()
         return self
-             
+ 
     def _currentlyIcon(self, iconProp):
         panel = self._createPanel((90, 95))
 
@@ -163,6 +142,40 @@ class UIBuilder:
 
         return panel
 
+    def _dailyConditions(self, conditions):
+        panel = self._createPanel((79, 99))
+        draw = ImageDraw.Draw(panel)
+        
+        day = datetime.fromtimestamp(\
+            conditions['time']).strftime("%A")
+        h,w = draw.textsize("{}".format(day), \
+            font=ImageFont.truetype('Roboto-Medium.ttf', 11))
+        draw.text((((79 - h) / 2), 5), day, fill='black', \
+            font=ImageFont.truetype('Roboto-Medium.ttf', 11))
+            
+        icon = self._getIcon('daily', conditions['icon'])
+        panel.paste(icon, ((80-55)//2, 15), icon)
+
+        highTemp = int(conditions['temperatureHigh'])
+        lowTemp = int(conditions['temperatureLow'])
+
+        h,w = draw.textsize("{}\xb0/{}\xb0".format(highTemp, lowTemp), \
+            font=ImageFont.truetype('Roboto-Medium.ttf', 11))
+        draw.text(((79-h)/2, 65), "{}\xb0/{}\xb0".format(lowTemp, highTemp), \
+            fill='black', font=ImageFont.truetype('Roboto-Medium.ttf', 11))         
+
+        h,w = draw.textsize(conditions['summary'], \
+            font=ImageFont.truetype('Roboto-Medium.ttf', 11))
+
+        if h > 79:
+            h,w = draw.textsize(self._getSummaryFromIcon(conditions['icon']), \
+            font=ImageFont.truetype('Roboto-Medium.ttf', 11))
+
+        draw.text(((79-h)/2, 80), self._getSummaryFromIcon(conditions['icon']),
+            fill='black', font=ImageFont.truetype('Roboto-Medium.ttf', 11))
+
+        return panel
+
     def _getIcon(self, type, icon):
         if type == 'currently':
             iconPath = currentlyIconPath
@@ -191,6 +204,30 @@ class UIBuilder:
             return Image.open(iconPath + 'partly-cloudy-night.png')
         if icon == 'thunderstorm':
             return Image.open(iconPath + 'thunderstorm')
+
+    def _getSummaryFromIcon(self, icon):
+        if icon == 'clear-day':
+            return 'Clear'
+        if icon == 'clear-night':
+            return 'Clear'
+        if icon == 'rain':
+            return 'Rain'
+        if icon == 'snow':
+            return 'Snow'
+        if icon == 'sleet':
+            return 'Sleet'
+        if icon == 'wind':
+            return 'Wind'
+        if icon == 'fog':
+            return 'Fog'
+        if icon == 'cloudy':
+            return 'Cloudy'
+        if icon == 'partly-cloudy-day':
+            return 'Partly Cloudy'
+        if icon == 'partly-cloudy,night':
+            return 'Partly Cloudy'
+        if icon == 'thunderstorm':
+            return 'Thunderstorm'
 
     def _createPanel(self, size):
         return Image.new('RGBA', size, (255, 255, 255))
