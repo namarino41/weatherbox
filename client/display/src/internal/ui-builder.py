@@ -74,45 +74,64 @@ class UIBuilder:
     def currently(self, currentlyForecast):
         panel = self._createPanel((280, 94))
 
-        icon = self._currentlyIcon(currentlyForecast['icon'])
-        panel.paste(icon, (0, 0), icon)
-
-        conditions = self._currentlyConditions(currentlyForecast)
-        panel.paste(conditions, (90, 0), conditions)
+        conditions = self._currently(currentlyForecast)
+        panel.paste(conditions, (0, 0), conditions)
 
         self.ui.paste(panel, (0, 31), panel)
-        self.ui.show()
 
         return self
 
     def daily(self, dailyForecast):
         for i in range(0, 5):
-            panel = self._dailyConditions(dailyForecast['data'][i])
+            panel = self._daily(dailyForecast['data'][i])
             self.ui.paste(panel, ((80 * i), 126), panel)
 
-        self.ui.show()
         return self
 
     def hourly(self, hourlyForecast):
         for i in range(0, 5):
-            hourlyForecast['hourly']['data'][i]
-            # panel = self._hourlyConditions(hourlyForecast['hourly']['data'])
-            # self.ui.paste(panel, ((80 * i), 226), panel)
+            hourlyForecast['data'][i]
+            panel = self._hourly(hourlyForecast['data'][i])
+            self.ui.paste(panel, ((80 * i), 226), panel)
+        self.ui.show()
+
+        return self
  
-    # def _hourlyConditions(self, conditions):
+    def _hourly(self, conditions):
+        panel = self._createPanel((79, 99))
+        draw = ImageDraw.Draw(panel)
 
+        time = datetime.fromtimestamp(conditions['time']).hour
+        
+        if (time > 12):
+            time = str((time % 12)) + ' PM'
+        else:
+            time = str(time) + ' AM'
 
-    def _currentlyIcon(self, iconProp):
-        panel = self._createPanel((90, 95))
+        h,w = draw.textsize("{}".format(time), \
+            font=ImageFont.truetype('Roboto-Medium.ttf', 11))
+        draw.text((((79 - h) / 2), 2), time, fill='black', \
+            font=ImageFont.truetype('Roboto-Medium.ttf', 11))
 
-        icon = self._getIcon('currently', iconProp)
-        panel.paste(icon, (10, 5), icon)
+        icon = self._getIcon('daily', conditions['icon'])
+        panel.paste(icon, ((80-55)//2, 9), icon)
+
+        temp = int(conditions['temperature'])
+        feelsLike = int(conditions['apparentTemperature'])
+
+        h,w = draw.textsize("{}\xb0/{}\xb0".format(temp, feelsLike), \
+            font=ImageFont.truetype('Roboto-Medium.ttf', 11))
+        draw.text(((79-h)/2, 58), "{}\xb0/{}\xb0".format(temp, feelsLike), \
+            fill='black', font=ImageFont.truetype('Roboto-Medium.ttf', 11))
 
         return panel
 
-    def _currentlyConditions(self, conditions):
-        panel = self._createPanel((190, 95))
+    def _currently(self, conditions):
+        panel = self._createPanel((280, 95))
         draw = ImageDraw.Draw(panel)
+
+        icon = self._getIcon('currently', conditions['icon'])
+        panel.paste(icon, (10, 5), icon)
         
         temperature = str(int(conditions['temperature']))
         feelsLike = str(int(conditions['apparentTemperature']))
@@ -123,36 +142,36 @@ class UIBuilder:
         # Draw temperature.
         h,w = draw.textsize("{}\xb0".format(temperature), \
             font=ImageFont.truetype('Roboto-Medium.ttf', 35))
-        draw.text(((190 - h) / 2, 5), "{}\xb0".format(temperature), \
+        draw.text((90 + (190 - h)/ 2, 5), "{}\xb0".format(temperature), \
             fill='black', font=ImageFont.truetype('Roboto-Medium.ttf', 35))
 
         # Draw 'feels like' temperature.
         h,w = draw.textsize("Feels like {}\xb0".format(feelsLike), \
             font=ImageFont.truetype('Roboto-Medium.ttf', 11))
-        draw.text(((190 - h) / 2, 40), "Feels like {}\xb0".format(feelsLike), \
+        draw.text((90 + (190 - h)/ 2, 40), "Feels like {}\xb0".format(feelsLike), \
             fill='black', font=ImageFont.truetype('Roboto-Medium.ttf', 11))
 
         # Draw summary.
         h,w = draw.textsize("{}".format(summary), \
             font=ImageFont.truetype('Roboto-Medium.ttf', 15))
-        draw.text(((190 - h) / 2, 55), "{}".format(summary), \
+        draw.text((90 + (190 - h) / 2, 55), "{}".format(summary), \
             fill='black', font=ImageFont.truetype('Roboto-Medium.ttf', 15))
 
         # Draw humidity.
         h,w = draw.textsize("Humidity: {}%".format(humidity), \
             font=ImageFont.truetype('Roboto-Medium.ttf', 11))
-        draw.text((((190 / 2) - h) / 2, 75), "Humidity: {}%".format(humidity), \
+        draw.text(((180 + (190 / 2) - h) / 2, 75), "Humidity: {}%".format(humidity), \
             fill='black', font=ImageFont.truetype('Roboto-Medium.ttf', 11))
 
         # Draw wind.
         h,w = draw.textsize("Wind: {} mph".format(wind), \
             font=ImageFont.truetype('Roboto-Medium.ttf', 11))
-        draw.text(((190 / 2) + ((190 / 2) - h) / 2, 75), "Wind: {} mph".format(wind), \
+        draw.text((90 + (190 / 2) + ((190 / 2) - h) / 2, 75), "Wind: {} mph".format(wind), \
             fill='black', font=ImageFont.truetype('Roboto-Medium.ttf', 11))
 
         return panel
 
-    def _dailyConditions(self, conditions):
+    def _daily(self, conditions):
         panel = self._createPanel((79, 99))
         draw = ImageDraw.Draw(panel)
         
@@ -247,4 +266,4 @@ class UIBuilder:
 
 with open("/Users/nickmarino/Downloads/test.json") as file:
     data = json.load(file)
-    UIBuilder().date(datetime.today().strftime('%Y-%m-%d')).currently(data['currently']).daily(data['daily'])
+    UIBuilder().date(datetime.today().strftime('%Y-%m-%d')).currently(data['currently']).daily(data['daily']).hourly(data['hourly'])
