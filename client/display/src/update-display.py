@@ -40,10 +40,6 @@ if __name__ == '__main__':
     scheduler.add_job(updateDisplay, 'interval', hours=1)
     scheduler.start()
 
-
-# with open("/Users/nickmarino/Downloads/test.json") as file:
-
-
 # import time
 # from PIL import Image,ImageDraw,ImageFont
 # import traceback
