@@ -21,8 +21,6 @@ class DarkSky {
             .extend(parameters.extend)
             .build();
 
-        console.log(request);
-
         return this._makeRequest(request);
     }
 

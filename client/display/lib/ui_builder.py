@@ -72,13 +72,13 @@ class UIBuilder:
         # Draw temperature.
         h,w = draw.textsize("{}\xb0".format(temperature), \
             font=ImageFont.truetype('Roboto-Medium.ttf', 35))
-        draw.text((90 + (190 - h) / 2, 5), "{}\xb0".format(temperature), \
+        draw.text((90 + (190 - h) / 2, 2), "{}\xb0".format(temperature), \
             fill='black', font=ImageFont.truetype('Roboto-Medium.ttf', 35))
 
         # Draw 'feels like' temperature.
         h,w = draw.textsize("Feels like {}\xb0".format(feelsLike), \
             font=ImageFont.truetype('Roboto-Medium.ttf', 11))
-        draw.text((90 + (190 - h) / 2, 40), "Feels like {}\xb0".format(feelsLike), \
+        draw.text((90 + (190 - h) / 2, 41), "Feels like {}\xb0".format(feelsLike), \
             fill='black', font=ImageFont.truetype('Roboto-Medium.ttf', 11))
 
         # Draw summary.
