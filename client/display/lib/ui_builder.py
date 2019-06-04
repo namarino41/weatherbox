@@ -3,10 +3,10 @@ import json
 from PIL import Image,ImageDraw,ImageFont
 from datetime import datetime
 
-baseUi = '../assets/UI.png'
-currentlyIconPath = '../assets/icons/currently/'
-dailyIconPath = '../assets/icons/daily/'
-hourlyIconPath = '../assets/icons/hourly/'
+baseUi = 'display/assets/UI.png'
+currentlyIconPath = 'display/assets/icons/currently/'
+dailyIconPath = 'display/assets/icons/daily/'
+hourlyIconPath = 'display/assets/icons/hourly/'
 
 class UIBuilder:
     def __init__(self):

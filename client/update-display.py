@@ -1,16 +1,13 @@
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
 
-from internal.lib import epd4in2
-from internal.lib import ui_builder
-from internal.lib import weatherbox_client
-from apscheduler.schedulers.blocking import BlockingScheduler
+# from display.lib import epd4in2
+from display.lib import ui_builder
+from weatherbox.lib import weatherbox_client
 from datetime import datetime
 import sys
-sys.path.append('internal/')
-sys.path.append('../assets/')
-
-
+sys.path.append('display/')
+sys.path.append('weatherbox/')
 
 def updateDisplay():
     forecast = weatherboxClient.getFull()
@@ -28,6 +25,7 @@ def updateDisplay():
 
 #     epd = epd4in2.EPD()
 #     epd.init()
+#     epd.Clear(0xFF)
 #     epd.display(epd.getbuffer(ui))
 #     epd.sleep()
 
@@ -36,9 +34,20 @@ def updateDisplay():
 if __name__ == '__main__':
     global weatherboxClient
     weatherboxClient = weatherbox_client.WeatherboxClient()
-    scheduler = BlockingScheduler()
-    scheduler.add_job(updateDisplay, 'interval', hours=1)
-    scheduler.start()
+
+updateDisplay()
+
+
+
+
+
+
+
+
+
+
+
+
 
 # import time
 # from PIL import Image,ImageDraw,ImageFont
