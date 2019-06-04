@@ -48,11 +48,9 @@ geolocation = new geolocation(geoConfig);
  */
 app.post('/web/subscribe', async (req, res) => {
     const clientId = uuidv1();
-    console.log(clientId)
 
     if (!subscriptions.clientId) {
         let parameters = req.body;
-        console.log(req)
 
         if (!parameters.location) {
             let geo = await geolocation.geolocate(req.ip);
