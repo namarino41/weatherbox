@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 import json
 from PIL import Image,ImageDraw,ImageFont
-from datetime import datetime, timezone
+from datetime import datetime
 
-baseUi = 'display/assets/UI.png'
-currentlyIconPath = 'display/assets/icons/currently/'
-dailyIconPath = 'display/assets/icons/daily/'
-hourlyIconPath = 'display/assets/icons/hourly/'
+baseUi = 'display/ui/resources/UI.png'
+currentlyIconPath = 'display/ui/resources/icons/currently/'
+dailyIconPath = 'display/ui/resources/icons/daily/'
+hourlyIconPath = 'display/ui/resources/icons/hourly/'
 
 class UIBuilder:
     def __init__(self):

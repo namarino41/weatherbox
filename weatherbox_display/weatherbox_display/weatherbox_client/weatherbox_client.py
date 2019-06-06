@@ -2,7 +2,7 @@ import requests
 import yaml
 
 ''' Weatherbox configuration file path '''
-weatherbox_config = 'weatherbox/lib/config/weatherbox-config.yaml'
+weatherbox_config = 'weatherbox_client/config/weatherbox-config.yaml'
 
 ''' Weatherbox Enpoints '''
 subscribe = '/web/subscribe'

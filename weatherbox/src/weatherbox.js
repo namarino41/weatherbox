@@ -29,12 +29,12 @@
 
 const express = require('express');
 const bodyParser = require("body-parser");
-let darkSky = require('./internal/lib/darksky.js');
-let geolocation = require('./internal/lib/geolocation.js');
+let darkSky = require('./internal/darksky.js');
+let geolocation = require('./internal/geolocation.js');
 let darkSkyConfig = require('./internal/config/darksky-config.json');
 let geoConfig = require('./internal/config/ipstack-config.json');
 const uuidv1 = require('uuid/v1');
-let {subscriptions, subscription} = require('./internal/lib/subscription-service.js');
+let {subscriptions, subscription} = require('./internal/subscription-service.js');
 
 const app = express();
 app.use(bodyParser.json()); 

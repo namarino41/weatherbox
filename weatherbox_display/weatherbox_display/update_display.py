@@ -1,13 +1,10 @@
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
 
-from display.lib import epd4in2
-from display.lib import ui_builder
-from weatherbox.lib import weatherbox_client
+# from display.lib import epd4in2
+from display.ui import ui_builder
+from weatherbox_client import weatherbox_client
 from datetime import datetime
-import sys
-sys.path.append('display/')
-sys.path.append('weatherbox/')
 
 if __name__ == '__main__':
     global weatherboxClient
@@ -27,12 +24,12 @@ def updateDisplay():
         .hourly(hourly_forecast) \
         .build()
 
-    epd = epd4in2.EPD()
-    epd.init()
-    epd.Clear(0xFF)
-    epd.display(epd.getbuffer(ui))
-    epd.sleep()
+    # epd = epd4in2.EPD()
+    # epd.init()
+    # epd.Clear(0xFF)
+    # epd.display(epd.getbuffer(ui))
+    # epd.sleep()
 
-    # ui.show()
+    ui.show()
 
 updateDisplay()
