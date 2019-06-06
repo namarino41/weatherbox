@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
 
-from display.lib import epd4in2
+from display.epd import epd4in2
 from display.ui import ui_builder
 from weatherbox_client import weatherbox_client
 from datetime import datetime
