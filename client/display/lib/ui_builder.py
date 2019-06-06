@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 from PIL import Image,ImageDraw,ImageFont
-from datetime import datetime
+from datetime import datetime, timezone
 
 baseUi = 'display/assets/UI.png'
 currentlyIconPath = 'display/assets/icons/currently/'
@@ -139,12 +139,8 @@ class UIBuilder:
         panel = self._createPanel((79, 99))
         draw = ImageDraw.Draw(panel)
 
-        time = datetime.fromtimestamp(conditions['time']).hour
-        
-        if (time > 12):
-            time = str((time % 12)) + ' PM'
-        else:
-            time = str(time) + ' AM'
+        time = datetime.fromtimestamp(conditions['time'])
+        time = "{} {}".format(int(time.strftime("%I")), time.strftime('%p'))
 
         h,w = draw.textsize("{}".format(time), \
             font=ImageFont.truetype('Roboto-Medium.ttf', 11))
@@ -221,7 +217,3 @@ class UIBuilder:
 
     def _createPanel(self, size):
         return Image.new('RGBA', size, (255, 255, 255))
-    
-# with open("/Users/nickmarino/Downloads/test.json") as file:
-#     data = json.load(file)
-#     UIBuilder().date(datetime.today().strftime('%Y-%m-%d')).currently(data['currently']).daily(data['daily']).hourly(data['hourly'])
