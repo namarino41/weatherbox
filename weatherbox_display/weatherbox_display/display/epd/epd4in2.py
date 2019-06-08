@@ -46,7 +46,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-from epd import epdconfig
+from . import epdconfig
 from PIL import Image
 import RPi.GPIO as GPIO
 
