@@ -1,4 +1,13 @@
-endpoint: "http://localhost:3000"
+baseEndpoint: "http://localhost:3000"
+endpoints:
+    web:
+        - subscribe: '/web/subscribe'
+        - full: '/web/getFull'
+        - currently: '/web/getCurrently'
+        - minutely: '/web/getMinutely'
+        - hourly: '/web/getHourly'
+        - daily:  '/web/getDaily'
+        - alerts: '/web/getAlerts'
 options:
     - location:
         latitude: 38.807540
