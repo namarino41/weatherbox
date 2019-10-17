@@ -29,10 +29,12 @@ class UIBuilder:
         return self
 
     def currently(self, currentlyForecast):
-        panel = self._createPanel((280, 94))
+        # panel = self._createPanel((280, 94))
+        panel = self._createPanel((400, 94))
 
         conditions = self._currently(currentlyForecast)
-        panel.paste(conditions, (0, 0), conditions)
+        # panel.paste(conditions, (0, 0), conditions)
+        panel.paste(conditions, (60, 0), conditions)
 
         self.ui.paste(panel, (0, 31), panel)
 
