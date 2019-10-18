@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
 
-from display.epd import epd4in2
+# from display.epd import epd4in2
 from display.ui import ui_builder
 from weatherbox_client import weatherbox_client
 from datetime import datetime
@@ -24,12 +24,12 @@ def updateDisplay():
         .hourly(hourly_forecast) \
         .build()
 
-    epd = epd4in2.EPD()
-    epd.init()
-    epd.Clear(0xFF)
-    epd.display(epd.getbuffer(ui))
-    epd.sleep()
+    # epd = epd4in2.EPD()
+    # epd.init()
+    # epd.Clear(0xFF)
+    # epd.display(epd.getbuffer(ui))
+    # epd.sleep()
 
-    # ui.show()
+    ui.show()
 
 updateDisplay()
