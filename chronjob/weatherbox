@@ -1,0 +1,1 @@
+@reboot $HOME/weatherbox/scripts/start_weatherbox.sh

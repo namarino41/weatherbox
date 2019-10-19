@@ -150,6 +150,4 @@ app.get('/web/getAlerts', async (req, res) => {
     res.send(await darkSky.getAlerts(subscriptions[clientId].parameters));
 });
 
-app.listen(port, '0.0.0.0', () => {
-    console.log(`WeatherBox listening on port ${port}`);
-});
+app.listen(port, '0.0.0.0', () => {});
