@@ -1,0 +1,2 @@
+@reboot root /home/pi/weatherbox/scripts/start_weatherbox.sh >> /home/pi/myscript.log1 2>&1
+

@@ -1,4 +1,4 @@
-#!/bin/sh
+#/bin/sh
 
-cd $HOME/weatherbox/weatherbox_server/
+cd /home/pi/weatherbox/weatherbox_server/
 node src/weatherbox.js &
