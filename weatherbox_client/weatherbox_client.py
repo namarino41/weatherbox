@@ -1,8 +1,9 @@
 import requests
 import yaml
+import os
 
 ''' Weatherbox configuration file path '''
-weatherbox_config = 'weatherbox_client/config/weatherbox-config.yaml'
+weatherbox_config = os.path.join(os.path.dirname(__file__), 'config/weatherbox-config.yaml')
 
 class WeatherboxClient:
     ''' A client for communicating with the Weatherbox service. '''

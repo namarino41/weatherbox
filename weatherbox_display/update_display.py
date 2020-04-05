@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
 
+import sys
+sys.path.append('..')
+
 from display.epddriver import epd4in2
 from display.ui import ui_builder
 from weatherbox_client import weatherbox_client
