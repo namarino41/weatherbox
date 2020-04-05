@@ -1,5 +1,4 @@
-package-lock.json
-weatherbox/node_modules
-weatherbox/package-lock.json
 .vscode
-server/weatherbox/node_modules/
+*__pycache__
+*.DS_Store
+./weatherbox_server/node_modeles
