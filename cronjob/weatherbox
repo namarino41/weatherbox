@@ -1,2 +1,3 @@
+@reboot root /home/pi/weatherbox/scripts/start_weatherbox.sh >> /home/pi/myscript.log1 2>&1
 0 12-23 * * * root /home/pi/weatherbox/scripts/update_display.sh >> /home/pi/myscript.log 2>&1
 

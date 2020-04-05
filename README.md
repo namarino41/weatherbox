@@ -59,5 +59,3 @@ Finally, schedule a cronjob:
 cd cronjob
 ./add_cronjob.sh
 ```
-
-
