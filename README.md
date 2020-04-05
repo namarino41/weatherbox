@@ -1,6 +1,6 @@
 # Weatherbox 
 
-Weatherbox is a simple weather display built with a Raspberry Pi and a Waveshare ePaper display. 
+Weatherbox is a simple weather display built with a Raspberry Pi and a [Waveshare ePaper display](https://www.waveshare.com/wiki/4.2inch_e-Paper_Module). 
 
 ## Installation and setup
 
@@ -11,29 +11,29 @@ First, install Node.js. Make sure to download the version of Node.js that corres
 For Raspberry Pi 4/3 B+ (armv7l):
 
 ```bash
-wget https://nodejs.org/dist/latest-v12.x/node-v12.6.0-linux-armv7l.tar.gz
-tar -xzf node-v12.6.0-linux-armv7l.tar.gz
-sudo cp -R node-v12.6.0-linux-armv7l/* /usr/local/
+$ wget https://nodejs.org/dist/latest-v12.x/node-v12.6.0-linux-armv7l.tar.gz
+$ tar -xzf node-v12.6.0-linux-armv7l.tar.gz
+$ sudo cp -R node-v12.6.0-linux-armv7l/* /usr/local/
 ```
 
 For Raspberry Pi Zero (armv61):
 
 ```bash
-wget https://nodejs.org/dist/v11.15.0/node-v11.15.0-linux-armv6l.tar.gz
-tar -xzf node-v11.15.0-linux-armv6l.tar.gz
-sudo cp -R node-v11.15.0-linux-armv6l/* /usr/local/
+$ wget https://nodejs.org/dist/v11.15.0/node-v11.15.0-linux-armv6l.tar.gz
+$ tar -xzf node-v11.15.0-linux-armv6l.tar.gz
+$ sudo cp -R node-v11.15.0-linux-armv6l/* /usr/local/
 ```
 
 Next, install the libraries required for the display:
 
 ```bash
-sudo apt install python3-pip
-sudo apt install python-imaging
-sudo pip3 install spidev
-sudo pip3 install RPi.GPIO
-sudo pip3 install python-pil
-sudo apt install fonts-roboto
-pip install pyyaml
+$ sudo apt install python3-pip
+$ sudo apt install python-imaging
+$ sudo pip3 install spidev
+$ sudo pip3 install RPi.GPIO
+$ sudo pip3 install python-pil
+$ sudo apt install fonts-roboto
+$ pip install pyyaml
 ```
 
 Since, the Waveshare display uses the SPI interface, we have to enable it on the Raspberry Pi. You can find a guide [here](https://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/).
@@ -56,6 +56,6 @@ Since, the Waveshare display uses the SPI interface, we have to enable it on the
 Finally, schedule a cronjob:
 
 ```bash
-cd cronjob
-./add_cronjob.sh
+$ cd cronjob
+$ ./add_cronjob.sh
 ```
