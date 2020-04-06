@@ -59,3 +59,4 @@ Finally, schedule a cronjob:
 $ cd cronjob
 $ ./add_cronjob.sh
 ```
+![Weatherbox display](resources/weatherbox.jpg)
