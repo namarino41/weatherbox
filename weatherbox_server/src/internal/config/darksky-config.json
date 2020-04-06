@@ -1,4 +1,4 @@
 {
     "endpoint": "https://api.darksky.net/forecast/",
-    "apiKey": "f953c1cb46e88541b2eabc6c00442932"
+    "apiKey": "<darksky api key>"
 }
