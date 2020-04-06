@@ -36,7 +36,9 @@ $ sudo apt install fonts-roboto
 $ pip install pyyaml
 ```
 
-Since, the Waveshare display uses the SPI interface, we have to enable it on the Raspberry Pi. You can find a guide [here](https://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/).
+Now, go to [Darksky](https://darksky.net/dev) and [ipstack](https://ipstack.com/) and get API keys for both. Insert them into `weatherbox_server/src/internal/config/darksky-config.json` and `weatherbox_server/src/internal/config/ipstack-config.json` respectively.
+
+Then, since the Waveshare display uses the SPI interface, it has to be enabled on the Raspberry Pi. You can find a guide to do that [here](https://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/).
 
 ### ePaper to Raspberry Pi Hardware connection
 
