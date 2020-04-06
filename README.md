@@ -38,9 +38,11 @@ $ pip install pyyaml
 
 Now, go to [Darksky](https://darksky.net/dev) and [ipstack](https://ipstack.com/) and get API keys for both. Insert them into `weatherbox_server/src/internal/config/darksky-config.json` and `weatherbox_server/src/internal/config/ipstack-config.json` respectively.
 
-Then, since the Waveshare display uses the SPI interface, it has to be enabled on the Raspberry Pi. You can find a guide to do that [here](https://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/).
+(Optional) You can set your location in `weatherbox_client/config/weatherbox-config.yaml`. Go [here](https://www.latlong.net/) to get your location. If you choose not to set your location, the ipstack API will do a geolocation based on your ip address. 
 
-### ePaper to Raspberry Pi Hardware connection
+Finally, since the Waveshare display uses the SPI interface, it has to be enabled on the Raspberry Pi. You can find a guide to do that [here](https://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/).
+
+### Hardware Connection
 
 | ePaper | Raspberry Pi (GPIO) |
 |--------|---------------------|
@@ -55,10 +57,13 @@ Then, since the Waveshare display uses the SPI interface, it has to be enabled o
 
 ### Cronjob Setup
 
-Finally, schedule a cronjob:
+To have the display update automatically, schedule a cronjob:
 
 ```bash
 $ cd cronjob
 $ ./add_cronjob.sh
 ```
+
+The display updates every hour, but you can edit to `cronjob/weatherbox` to have the display update at different frequencies.
+
 ![Weatherbox display](resources/weatherbox.jpg)

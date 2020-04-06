@@ -10,5 +10,5 @@ endpoints:
         - alerts: '/web/getAlerts'
 options:
     - location:
-        latitude: 38.807540
-        longitude: -77.350780
+        latitude: <latitude>
+        longitude: <longitude>
