@@ -38,7 +38,28 @@ $ pip install pyyaml
 
 Now, go to [Darksky](https://darksky.net/dev) and [ipstack](https://ipstack.com/) and get API keys for both. Insert them into `weatherbox_server/src/internal/config/darksky-config.json` and `weatherbox_server/src/internal/config/ipstack-config.json` respectively.
 
+```json
+{
+    "endpoint": "https://api.darksky.net/forecast/",
+    "apiKey": "<darksky api key>"
+}
+```
+
+```json
+{
+    "endpoint": "http://api.ipstack.com/",
+    "apiKey": "<ipstack api key>"
+}
+```
+
 (Optional) You can set your location in `weatherbox_client/config/weatherbox-config.yaml`. Go [here](https://www.latlong.net/) to get your location. If you choose not to set your location, the ipstack API will do a geolocation based on your ip address. 
+
+```yaml
+options:
+    - location:
+        latitude: <latitude>
+        longitude: <longitude>
+```
 
 Finally, since the Waveshare display uses the SPI interface, it has to be enabled on the Raspberry Pi. You can find a guide to do that [here](https://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/).
 
