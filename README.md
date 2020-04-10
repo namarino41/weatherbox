@@ -36,6 +36,13 @@ $ sudo apt install fonts-roboto
 $ pip install pyyaml
 ```
 
+And install the libaries required for the server:
+
+```bash
+$ cd weatherbox-server
+$ npm install
+```
+
 Now, go to [Darksky](https://darksky.net/dev) and [ipstack](https://ipstack.com/) and get API keys for both. Insert them into `weatherbox_server/src/internal/config/darksky-config.json` and `weatherbox_server/src/internal/config/ipstack-config.json` respectively.
 
 ```json
